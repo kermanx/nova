@@ -34,8 +34,8 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add tests/test262/expectations.json
-          git add tests/test262/metrics.json
+          git add tests/expectations.json
+          git add tests/metrics.json
           git commit -m "Update test262 expectations and metrics"
           git push
         env:

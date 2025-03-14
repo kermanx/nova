@@ -792,8 +792,7 @@ impl CompileEvaluation for ast::AssignmentExpression<'_> {
             ast::AssignmentTarget::TSAsExpression(_)
             | ast::AssignmentTarget::TSSatisfiesExpression(_)
             | ast::AssignmentTarget::TSNonNullExpression(_)
-            | ast::AssignmentTarget::TSTypeAssertion(_)
-            | ast::AssignmentTarget::TSInstantiationExpression(_) => unreachable!(),
+            | ast::AssignmentTarget::TSTypeAssertion(_) => unreachable!(),
         };
 
         if self.operator == oxc_syntax::operator::AssignmentOperator::Assign {
@@ -1040,7 +1039,8 @@ impl CompileEvaluation for ast::ObjectExpression<'_> {
                         ast::PropertyKey::UnaryExpression(init) => init.compile(ctx),
                         ast::PropertyKey::UpdateExpression(init) => init.compile(ctx),
                         ast::PropertyKey::YieldExpression(init) => init.compile(ctx),
-                        ast::PropertyKey::JSXElement(_)
+                        ast::PropertyKey::V8IntrinsicExpression(_)
+                        | ast::PropertyKey::JSXElement(_)
                         | ast::PropertyKey::JSXFragment(_)
                         | ast::PropertyKey::TSAsExpression(_)
                         | ast::PropertyKey::TSSatisfiesExpression(_)
@@ -1729,7 +1729,8 @@ impl CompileEvaluation for ast::Expression<'_> {
             ast::Expression::UnaryExpression(x) => x.compile(ctx),
             ast::Expression::UpdateExpression(x) => x.compile(ctx),
             ast::Expression::YieldExpression(x) => x.compile(ctx),
-            ast::Expression::JSXElement(_)
+            ast::Expression::V8IntrinsicExpression(_)
+            | ast::Expression::JSXElement(_)
             | ast::Expression::JSXFragment(_)
             | ast::Expression::TSAsExpression(_)
             | ast::Expression::TSSatisfiesExpression(_)
@@ -1748,7 +1749,6 @@ impl CompileEvaluation for ast::UpdateExpression<'_> {
             ast::SimpleAssignmentTarget::PrivateFieldExpression(_) => todo!(),
             ast::SimpleAssignmentTarget::StaticMemberExpression(x) => x.compile(ctx),
             ast::SimpleAssignmentTarget::TSAsExpression(_)
-            | ast::SimpleAssignmentTarget::TSInstantiationExpression(_)
             | ast::SimpleAssignmentTarget::TSNonNullExpression(_)
             | ast::SimpleAssignmentTarget::TSSatisfiesExpression(_)
             | ast::SimpleAssignmentTarget::TSTypeAssertion(_) => unreachable!(),
@@ -2544,7 +2544,8 @@ impl CompileEvaluation for ast::ForStatement<'_> {
                     init.compile(ctx);
                 }
                 ast::ForStatementInit::YieldExpression(init) => init.compile(ctx),
-                ast::ForStatementInit::JSXElement(_)
+                ast::ForStatementInit::V8IntrinsicExpression(_)
+                | ast::ForStatementInit::JSXElement(_)
                 | ast::ForStatementInit::JSXFragment(_)
                 | ast::ForStatementInit::TSAsExpression(_)
                 | ast::ForStatementInit::TSSatisfiesExpression(_)
